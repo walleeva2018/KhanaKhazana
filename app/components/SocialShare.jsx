@@ -10,7 +10,7 @@ import {
 } from 'react-share';
 
 const ShareButtons = ({ shareLink }) => {
-  const shareUrl = `https://lwsfinal.vercel.app/categories/${shareLink}`;
+  const shareUrl = `https://khana-khazana-drab.vercel.app/categories/${shareLink}`;
   const title = 'Check out this awesome website!';
 
   return (
