@@ -9,21 +9,20 @@ import User from '@/app/models/User';
 import  { Metadata, ResolvingMetadata } from 'next'
 
 export async function generateMetadata({ params, searchParams }, parent) {
-
+    // read route params
+    const id = params.id
    
     // fetch data
     const recipe = await Recipe.findById(params.id);
    
-   
-   
+
     return {
       title: recipe.name,
-      description: recipe.description,
-      openGraph: {
-        images: [`${recipe.image}`],
-      },
+      description: recipe.description
+
     }
   }
+
 
 export default async function DetailPage({ params }) {
     await connectMongo();
