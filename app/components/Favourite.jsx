@@ -1,26 +1,75 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useRef, useState ,useEffect} from 'react';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
-export default function Favourite({ itemID }) {
-  const [isFavorited, setIsFavorited] = useState(false);
+export default function Favourite({ itemID  , allUser}) {
+ 
   const emailData = Cookies.get('email')
+  const [isMounted, setIsMounted] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const router= useRouter()
+   const currentUser = allUser.filter((item)=>{
+    return item.email===emailData
+   })
 
-  const toggleFavorite = async () => {
-    setIsFavorited((prevState) => !prevState);
-    const favourite ={
-        favourites: ['1', '2']
+   useEffect(() => {
+    setIsMounted(true);
+    setIsFavorited(currentUser[0]?.favourites?.includes(itemID));
+  }, [currentUser, itemID]);
+   console.log('as', currentUser[0]?.favourites?.includes(itemID))
+
+
+
+   const favouriteList = useRef(currentUser[0]?.favourites)
+   
+
+   const toggleFavorite = async () => {
+    
+
+    if(!favouriteList.current)
+    {
+      toast.success('Login First');
+      setTimeout(()=>{
+        router.push("/login");
+      },1000)  
     }
-    console.log('dsadas', emailData)
-    await updateUser(emailData, favourite)
+    else{
+      setIsFavorited((prevState) => !prevState);
+
+    let updatedFavourites;
+    
+    if (favouriteList.current.includes(itemID)) {
+      updatedFavourites = favouriteList.current.filter((id) => id !== itemID);
+    } else {
+      updatedFavourites = [...favouriteList.current, itemID];
+    }
+
+    favouriteList.current = updatedFavourites;
+
+    const favourite = {
+      favourites: updatedFavourites
+    };
+
+    try{
+    await updateUser(emailData, favourite);
+    }catch(e)
+    {
+      console.log(e)
+    }
+  }
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <>
       <div
-        className={`flex gap-2 text-gray-600 cursor-pointer hover:text-${
-          isFavorited ? 'red' : '#000000'
-        }`}
+       className={`flex gap-2 text-gray-600 cursor-pointer ${isFavorited ? 'hover:text-red-500' : 'hover:text-black'}`}
         onClick={toggleFavorite}
       >
         <svg
@@ -40,8 +89,9 @@ export default function Favourite({ itemID }) {
             d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"
           />
         </svg>
-        <span>Favourite</span>
+       {isFavorited ? <span>Favourite</span>: <span>Add to Favourite</span>}
       </div>
+      <ToastContainer position="top-center" />
     </>
   );
 }

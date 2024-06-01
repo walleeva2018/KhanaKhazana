@@ -5,10 +5,30 @@ import React from 'react';
 import Image from 'next/image';
 import SocialShare from '../../components/SocialShare'
 import Favourite from '@/app/components/Favourite';
+import User from '@/app/models/User';
+import  { Metadata, ResolvingMetadata } from 'next'
+
+export async function generateMetadata({ params, searchParams }, parent) {
+
+   
+    // fetch data
+    const recipe = await Recipe.findById(params.id);
+   
+   
+   
+    return {
+      title: recipe.name,
+      description: recipe.description,
+      openGraph: {
+        images: [`${recipe.image}`],
+      },
+    }
+  }
 
 export default async function DetailPage({ params }) {
     await connectMongo();
     const recipe = await Recipe.findById(params.id);
+    const users = await User.find()
   
     if (!recipe) {
         return <p>Recipe not found</p>;
@@ -72,7 +92,7 @@ export default async function DetailPage({ params }) {
                                 </div>
 
                                 <div className="flex gap-4 justify-end">
-                                <Favourite itemID={params.id} />
+                                <Favourite itemID={params.id}  allUser={users}/>
 
                                     <div className="flex gap-2 text-gray-600 cursor-pointer hover:text-[#0E79F6]">
   <SocialShare shareLink={params.id} />

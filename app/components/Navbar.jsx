@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Logo from '../../public/images/logo.png'
+import SignOutView from './SignOutView'
 
 
 
@@ -18,20 +19,18 @@ export default async function Navbar() {
 
       <ul className="flex gap-4 text-sm text-gray-500">
         <li className="py-2 active">
-          <a href="./index.html">Home</a>
+          <a href="/">Home</a>
         </li>
 
         <li className="py-2">
-          <a href="./index.html">Recipe</a>
+          <a href="/recipe">Recipe</a>
         </li>
 
         <li className="py-2">
-          <a href="./index.html">About us</a>
+          <a href="/about">About us</a>
         </li>
+<SignOutView />
 
-        <li className="py-2 bg-[#eb4a36] px-6 rounded-md text-white content-center">
-          <a href="./login.html">Login</a>
-        </li>
       </ul>
     </div>
   </nav>
