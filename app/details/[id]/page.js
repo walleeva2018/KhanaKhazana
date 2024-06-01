@@ -6,7 +6,6 @@ import Image from 'next/image';
 import SocialShare from '../../components/SocialShare'
 import Favourite from '@/app/components/Favourite';
 import User from '@/app/models/User';
-import  { Metadata, ResolvingMetadata } from 'next'
 
 export async function generateMetadata({ params, searchParams }, parent) {
     // read route params
