@@ -90,7 +90,7 @@ export default async function DetailPage({ params }) {
                                 </div>
 
                                 <div className="flex gap-4 justify-end">
-                                <Favourite itemID={params.id}  allUser={users}/>
+
 
                                     <div className="flex gap-2 text-gray-600 cursor-pointer hover:text-[#0E79F6]">
   <SocialShare shareLink={params.id} />
