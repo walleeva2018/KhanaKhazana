@@ -12,12 +12,12 @@ export async function generateMetadata({ params, searchParams }, parent) {
     const id = params.id
    
     // fetch data
-    const recipe = await Recipe.findById(params.id);
+    const recipe = await Recipe.find();
    
 
     return {
-      title: recipe.name,
-      description: recipe.description
+      title: recipe[params.id].name,
+      description: recipe[params.id].description
 
     }
   }
@@ -25,7 +25,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
 export default async function DetailPage({ params }) {
     await connectMongo();
-    const recipe = await Recipe.findById(params.id);
+    const recipe = await Recipe.find();
     const users = await User.find()
   
     if (!recipe) {
@@ -41,17 +41,17 @@ export default async function DetailPage({ params }) {
                         <div className="grid grid-cols-12 container gap-8 justify-items-center">
                             <div className="col-span-12 md:col-span-6">
                                 <Image
-                                    src={recipe.image}
-                                    alt={recipe.name}
+                                    src={recipe[params.id].image}
+                                    alt={recipe[params.id].name}
                                     width={600}
                                     height={600}
                                     className="w-full h-full rounded-lg object-contain"
                                 />
                             </div>
                             <div className="col-span-12 md:col-span-6 py-8 flex flex-col justify-center">
-                                <h2 className="font-semibold text-4xl lg:w-8/12 leading-10">{recipe.name}</h2>
-                                <p className="text-xs text-[#eb4a36] italic my-2">{recipe.category}</p>
-                                <p className="text-gray-600 text-sm my-6 leading-6">{recipe.description}</p>
+                                <h2 className="font-semibold text-4xl lg:w-8/12 leading-10">{recipe[params.id].name}</h2>
+                                <p className="text-xs text-[#eb4a36] italic my-2">{recipe[params.id].category}</p>
+                                <p className="text-gray-600 text-sm my-6 leading-6">{recipe[params.id].description}</p>
 
                                 <div className="flex gap-4 justify-center divide-x my-12">
                                     <div className="flex-1 text-center">
@@ -62,7 +62,7 @@ export default async function DetailPage({ params }) {
                                             <path d="M12 7v5l3 3" />
                                         </svg>
                                         <h3 className="font-medium text-lg text-gray-700 mt-2">Prep time</h3>
-                                        <p className="text-gray-500 text-sm">{recipe.activeTime}</p>
+                                        <p className="text-gray-500 text-sm">{recipe[params.id].activeTime}</p>
                                     </div>
                                     <div className="flex-1 text-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -73,7 +73,7 @@ export default async function DetailPage({ params }) {
                                             <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z" />
                                         </svg>
                                         <h3 className="font-medium text-lg text-gray-700 mt-2">Cook time</h3>
-                                        <p className="text-gray-500 text-sm">{recipe.totalTime}</p>
+                                        <p className="text-gray-500 text-sm">{recipe[params.id].totalTime}</p>
                                     </div>
                                     <div className="flex-1 text-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -85,7 +85,7 @@ export default async function DetailPage({ params }) {
                                             <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                         </svg>
                                         <h3 className="font-medium text-lg text-gray-700 mt-2">Servings</h3>
-                                        <p className="text-gray-500 text-sm">{recipe.serves}</p>
+                                        <p className="text-gray-500 text-sm">{recipe[params.id].serves}</p>
                                     </div>
                                 </div>
 
@@ -104,7 +104,7 @@ export default async function DetailPage({ params }) {
                         <div className="container py-12">
                             <h3 className="font-semibold text-xl py-6">How to Make it</h3>
                             <div>
-                                {recipe.steps.map((step, index) => (
+                                {recipe[params.id].steps.map((step, index) => (
                                     <div key={index} className="step">
                                         <h3>Step {index + 1}</h3>
                                         <p>{step}</p>

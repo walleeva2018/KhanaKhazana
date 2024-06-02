@@ -13,9 +13,9 @@ export default async function RecipeItem() {
 console.log('just checking')
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8 justify-items-center">
-            {recipes.map((recipe) => (
+            {recipes.map((recipe,index) => (
            <div key={recipe._id}>
-            <Link href={`/details/${recipe._id}`}  className="card">
+            <Link href={`/details/${index}`}  className="card">
                     <Image src={recipe.thumbnail} width={500} height={300} className="rounded-md" alt={recipe.name} />
                     <h4 className="my-2">{recipe.name}</h4>
                     <p className="text-gray-500 text-sm mb-2">{recipe.description}</p>
@@ -25,7 +25,10 @@ console.log('just checking')
                     </div>
             </Link>
             </div>
+           
             ))}
+
+<Link href={'/dada'}> Daasdasda</Link>
         </div>
     );
 }
