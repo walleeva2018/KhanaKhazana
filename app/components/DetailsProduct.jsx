@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import SocialShare from './SocialShare'
+import Favourite from './Favourite';
 
-export default function DetailsProduct({ selectedProduct }) {
+export default function DetailsProduct({ selectedProduct , allUser}) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -72,6 +73,7 @@ export default function DetailsProduct({ selectedProduct }) {
                             </div>
 
                             <div className="flex gap-4 justify-end">
+                                <Favourite itemID={selectedProduct.name} allUser={allUser}/>
                                 <div className="flex gap-2 text-gray-600 cursor-pointer hover:text-[#0E79F6]">
                                     <SocialShare shareLink={selectedProduct.id} />
                                 </div>

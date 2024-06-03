@@ -13,6 +13,7 @@ import DetailsProduct from '@/app/components/DetailsProduct';
 export default async function DetailPage({ params }) {
     await connectMongo();
     const recipe = await Recipe.find();
+    const users = await User.find()
   
     if (!recipe) {
         return <p>Recipe not found</p>;
@@ -22,7 +23,7 @@ export default async function DetailPage({ params }) {
         <>
             <body>
                 <Navbar />
-                <DetailsProduct selectedProduct={recipe[params.id]}/>
+                <DetailsProduct selectedProduct={recipe[params.id]} allUser={users}/>
             </body>
         </>
     );

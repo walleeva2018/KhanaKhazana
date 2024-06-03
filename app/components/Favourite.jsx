@@ -8,64 +8,40 @@ import { useRouter } from 'next/navigation';
 export default function Favourite({ itemID  , allUser}) {
  
   const emailData = Cookies.get('email')
-  const [isMounted, setIsMounted] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const router= useRouter()
-   const currentUser = allUser.filter((item)=>{
-    return item.email===emailData
-   })
 
-   useEffect(() => {
-    setIsMounted(true);
-    setIsFavorited(currentUser[0]?.favourites?.includes(itemID));
-  }, [currentUser, itemID]);
-   console.log('as', currentUser[0]?.favourites?.includes(itemID))
+  const currentUser = allUser.filter((item)=>{
+    return item.email === emailData
+  })
+  const [isFavorited, setIsFavourited] = useState(currentUser[0].favourites.includes(itemID))
+  const router = useRouter()
 
-
-
-   const favouriteList = useRef(currentUser[0]?.favourites)
-   
-
-   const toggleFavorite = async () => {
-    
-
-    if(!favouriteList.current)
+  function toggleFavorite(){
+    if(!emailData)
     {
-      toast.success('Login First');
+      toast.success("Login First!")
       setTimeout(()=>{
-        router.push("/login");
-      },1000)  
+         router.push('/login')
+      },1000)
     }
     else{
-      setIsFavorited((prevState) => !prevState);
-
-    let updatedFavourites;
-    
-    if (favouriteList.current.includes(itemID)) {
-      updatedFavourites = favouriteList.current.filter((id) => id !== itemID);
+    setIsFavourited(!isFavorited)
+    if (!currentUser[0].favourites.includes(itemID)) {
+        // Item is not in the favourites, add it
+        currentUser[0].favourites.push(itemID);
     } else {
-      updatedFavourites = [...favouriteList.current, itemID];
+        // Item is already in the favourites, remove it
+        currentUser[0].favourites = currentUser[0].favourites.filter(id => id !== itemID);
     }
-
-    favouriteList.current = updatedFavourites;
-
-    const favourite = {
-      favourites: updatedFavourites
+    
+    const body = {
+        favourites: currentUser[0].favourites
     };
-
-    try{
-    await updateUser(emailData, favourite);
-    }catch(e)
-    {
-      console.log(e)
+    
+    updateUser(emailData, body);
+  
     }
   }
-  };
-
-  if (!isMounted) {
-    return null;
-  }
-
+  
   return (
     <>
       <div
@@ -89,7 +65,7 @@ export default function Favourite({ itemID  , allUser}) {
             d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"
           />
         </svg>
-       {isFavorited ? <span>Favourite</span>: <span>Add to Favourite</span>}
+       {isFavorited ? <span>Favourite</span>: <span>Add to Favourite {currentUser[0].name}</span>}
       </div>
       <ToastContainer position="top-center" />
     </>
