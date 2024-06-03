@@ -8,20 +8,6 @@ import Favourite from '@/app/components/Favourite';
 import User from '@/app/models/User';
 import DetailsProduct from '@/app/components/DetailsProduct';
 
-export async function generateMetadata({ params }) {
-    // read route params
-    const id = params.id
-   
-    // fetch data
-    const recipe = await Recipe.find();
-   
-
-    return {
-      title: recipe[params.id].name,
-      description: recipe[params.id].description
-
-    }
-  }
 
 
 export default async function DetailPage({ params }) {
