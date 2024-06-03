@@ -9,14 +9,37 @@ export default function Favourite({ itemID  , allUser}) {
  
   const emailData = Cookies.get('email')
 
-  const currentUser = allUser?.filter((item)=>{
+  const currentUser = allUser.filter((item)=>{
     return item.email === emailData
   })
   const [isFavorited, setIsFavourited] = useState(currentUser[0]?.favourites?.includes(itemID))
   const router = useRouter()
 
   function toggleFavorite(){
-
+    if(!emailData)
+    {
+      toast.success("Login First!")
+      setTimeout(()=>{
+         router.push('/login')
+      },1000)
+    }
+    else{
+    setIsFavourited(!isFavorited)
+    if (!currentUser[0]?.favourites?.includes(itemID)) {
+        // Item is not in the favourites, add it
+        currentUser[0].favourites.push(itemID);
+    } else {
+        // Item is already in the favourites, remove it
+       currentUser[0].favourites = currentUser[0]?.favourites?.filter(id => id !== itemID);
+    }
+    
+    const body = {
+        favourites: currentUser[0]?.favourites
+    };
+    
+    updateUser(emailData, body);
+  
+    }
   }
   
   return (
