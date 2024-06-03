@@ -9,37 +9,14 @@ export default function Favourite({ itemID  , allUser}) {
  
   const emailData = Cookies.get('email')
 
-  const currentUser = allUser.filter((item)=>{
+  const currentUser = allUser?.filter((item)=>{
     return item.email === emailData
   })
-  const [isFavorited, setIsFavourited] = useState(currentUser[0].favourites.includes(itemID))
+  const [isFavorited, setIsFavourited] = useState(currentUser[0]?.favourites?.includes(itemID))
   const router = useRouter()
 
   function toggleFavorite(){
-    if(!emailData)
-    {
-      toast.success("Login First!")
-      setTimeout(()=>{
-         router.push('/login')
-      },1000)
-    }
-    else{
-    setIsFavourited(!isFavorited)
-    if (!currentUser[0].favourites.includes(itemID)) {
-        // Item is not in the favourites, add it
-        currentUser[0].favourites.push(itemID);
-    } else {
-        // Item is already in the favourites, remove it
-        currentUser[0].favourites = currentUser[0].favourites.filter(id => id !== itemID);
-    }
-    
-    const body = {
-        favourites: currentUser[0].favourites
-    };
-    
-    updateUser(emailData, body);
-  
-    }
+
   }
   
   return (
@@ -65,7 +42,7 @@ export default function Favourite({ itemID  , allUser}) {
             d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"
           />
         </svg>
-       {isFavorited ? <span>Favourite</span>: <span>Add to Favourite {currentUser[0].name}</span>}
+       {isFavorited ? <span>Favourite</span>: <span>Add to Favourite</span>}
       </div>
       <ToastContainer position="top-center" />
     </>
