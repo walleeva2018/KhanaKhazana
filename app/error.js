@@ -10,7 +10,7 @@ export default function ErrorPage() {
           href="/"
           className="inline-block bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-200"
         >
-          Go back to the homepage & Try Another It will Work
+          Go back to the homepage & Try Another and wait few Seconds it will Work
         </a>
       </div>
     </div>
