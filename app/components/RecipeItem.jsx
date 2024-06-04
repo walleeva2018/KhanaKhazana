@@ -10,9 +10,13 @@ export default async function RecipeItem() {
     const recipes = await Recipe.find();
 
 
-console.log('just checking')
+
     return (
+        <>
+        <p>Initial Load takes few seconds so have patience </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8 justify-items-center">
+
+
             {recipes.map((recipe,index) => (
            <div key={recipe._id}>
             <Link href={`/details/${recipe._id}`}  className="card">
@@ -28,7 +32,7 @@ console.log('just checking')
            
             ))}
 
-<Link href={'/dada'}> Daasdasda</Link>
         </div>
+        </>
     );
 }

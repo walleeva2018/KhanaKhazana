@@ -29,6 +29,7 @@ export default async function DetailPage({ params }) {
         <>
             <body>
                 <Navbar />
+                
                 <DetailsProduct selectedProduct={recipe} allUser={users} IDNumber={params.id}/>
             </body>
         </>
