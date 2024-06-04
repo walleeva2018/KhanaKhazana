@@ -4,7 +4,7 @@ import Image from 'next/image'
 import SocialShare from './SocialShare'
 import Favourite from './Favourite';
 
-export default function DetailsProduct({ selectedProduct , allUser}) {
+export default function DetailsProduct({ selectedProduct , allUser, IDNumber}) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export default function DetailsProduct({ selectedProduct , allUser}) {
                             <div className="flex gap-4 justify-end">
                                 <Favourite itemID={selectedProduct.name} allUser={allUser}/>
                                 <div className="flex gap-2 text-gray-600 cursor-pointer hover:text-[#0E79F6]">
-                                    <SocialShare shareLink={selectedProduct.id} />
+                                    <SocialShare shareLink={IDNumber} />
                                 </div>
                             </div>
                         </div>

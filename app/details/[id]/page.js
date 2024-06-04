@@ -10,6 +10,17 @@ import DetailsProduct from '@/app/components/DetailsProduct';
 
 
 
+export async function generateMetadata({ params, searchParams }, parent) {
+    // read route params
+    const id = params.id
+    const recipe = await Recipe.find();
+    return {
+        title: recipe[id].name,
+        description: recipe[id].description
+      }
+
+
+}
 export default async function DetailPage({ params }) {
     await connectMongo();
     const recipe = await Recipe.find();
@@ -23,7 +34,7 @@ export default async function DetailPage({ params }) {
         <>
             <body>
                 <Navbar />
-                <DetailsProduct selectedProduct={recipe[params.id]} allUser={users}/>
+                <DetailsProduct selectedProduct={recipe[params.id]} allUser={users} IDNumber={params.id}/>
             </body>
         </>
     );
