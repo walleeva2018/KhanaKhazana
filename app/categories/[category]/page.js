@@ -30,7 +30,7 @@ export default async function CategoryPage({ params }) {
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-8 justify-items-center">
                                 {filteredRecipes.length > 0 ? (
                                     filteredRecipes.map((recipe,index) => (
-                                 <Link href={`/details/${index}`} key={recipe._id}>      <div  className="card">
+                                 <Link href={`/details/${recipe._id}`} key={recipe._id}>      <div  className="card">
                                             <Image
                                                 src={recipe.thumbnail}
                                                 width={300}

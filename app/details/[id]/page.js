@@ -18,7 +18,7 @@ export const metadata = {
 
 export default async function DetailPage({ params }) {
     await connectMongo();
-    const recipe = await Recipe.find();
+    const recipe = await Recipe.findById(params.id);
     const users = await User.find()
   
     if (!recipe) {
@@ -29,7 +29,7 @@ export default async function DetailPage({ params }) {
         <>
             <body>
                 <Navbar />
-                <DetailsProduct selectedProduct={recipe[params.id]} allUser={users} IDNumber={params.id}/>
+                <DetailsProduct selectedProduct={recipe} allUser={users} IDNumber={params.id}/>
             </body>
         </>
     );
