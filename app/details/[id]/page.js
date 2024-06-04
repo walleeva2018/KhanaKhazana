@@ -10,26 +10,12 @@ import DetailsProduct from '@/app/components/DetailsProduct';
 
 
 
-export async function generateMetadata({ params, searchParams }, parent) {
-    // read route params
-    const id = params.id
-    const recipe = await Recipe.find();
-    if(id){
-    return {
-        title: recipe[id]?.name,
-        description: recipe[id]?.description
-      }
-    }
-    else
-    {
-        return {
+export const metadata = {
         title: 'Khana Khanzana Item',
-        description: 'THis is a very delicious food to eat. Also if sharing in social media does not generate proper metadata try doing it again'
-        }
-    }
-
-
+        description: 'THis is a very delicious food to eat'
 }
+        
+
 export default async function DetailPage({ params }) {
     await connectMongo();
     const recipe = await Recipe.find();
